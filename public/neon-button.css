@@ -1,0 +1,306 @@
+:root {
+    --neon-text-color: #f40;
+    --neon-border-color: #08f;
+    --neon-border-catalog-color: #ee1f87;
+    --menu-main-color: #9f41ad;
+}
+
+body {
+    overflow-x: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    background: #031321;
+    font-family: consolas;
+}
+
+
+/* 
+a {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #2196f3;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transform: 0.2s;
+}
+
+a:hover {
+    color: #031321;
+    background: #2196f3;
+    box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+    animation: neon-button-light 2s linear;
+    transition-delay: 0.2s;
+    border-radius: 10px;
+}
+
+@keyframes neon-button-light {
+    0%,
+    20% {
+        opacity: 10%;
+    }
+    10%,
+    40% {
+        opacity: 1;
+    }
+} */
+
+.neon-background {
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    position: absolute;
+    z-index: -100;
+}
+
+.neon-background:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .7);
+}
+
+@keyframes flicker {
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+        text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-text-color), 0 0 3rem var(--neon-text-color);
+        box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
+    }
+    20%,
+    24%,
+    55% {
+        text-shadow: none;
+        box-shadow: none;
+    }
+}
+
+.anchor-neon-signboard {
+    margin-left: 10vw;
+    margin-top: 10vh;
+    font-size: 10vw;
+    padding: 2vw;
+}
+
+.sonic-neon-signboard {
+    margin-left: 80vw;
+    margin-top: 70vh;
+    font-size: 5vw;
+    padding: 1vw;
+}
+
+.sonic-jp-neon-signboard {
+    margin-left: 20vw;
+    margin-top: 70vh;
+    font-size: 3vw;
+    padding: 0.5vw;
+}
+
+.sever-neon-signboard {
+    margin-left: 65vw;
+    margin-top: 30vh;
+    font-size: 5vw;
+    padding: 1vw 2vw 1vw 1vw;
+}
+
+.umbrella-neon-signboard {
+    margin-left: 30vw;
+    margin-top: 35vh;
+    font-size: 5vw;
+    padding: 1vw 2vw 1vw 1vw;
+}
+
+.rocket-neon-signboard {
+    margin-left: 50vw;
+    margin-top: 20vh;
+    font-size: 4.5vw;
+    padding: 0.5vw;
+}
+
+.optin-monster-neon-signboard {
+    margin-left: 65vw;
+    margin-top: 80vh;
+    font-size: 4.5vw;
+    padding: 0.5vw;
+}
+
+.music-neon-signboard {
+    margin-left: 50vw;
+    margin-top: 50vh;
+    font-size: 8vw;
+    padding: 2vw;
+}
+
+.drupal-neon-signboard {
+    margin-left: 90vw;
+    margin-top: 5vh;
+    font-size: 6vw;
+    padding: 0.5vw;
+}
+
+.neon-background .neon-signboard {
+    position: absolute;
+    border: 0.4vw solid #fff;
+    border-radius: 2vw;
+    text-transform: uppercase;
+    animation: flicker 6.5s infinite alternate;
+    animation-delay: 10s;
+    color: #fff;
+    text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-text-color), 0 0 3rem var(--neon-text-color);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
+}
+
+.input[type="submit"] {
+    animation-delay: 10s;
+    color: #fff;
+    text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-text-color), 0 0 3rem var(--neon-text-color);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
+}
+
+
+/* 
+a span {
+    position: absolute;
+    display: block;
+}
+
+a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #2196f3);
+}
+
+a:hover span:nth-child(1) {
+    left: 100%;
+    transition: 0.2s;
+}
+
+a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #2196f3);
+}
+
+a:hover span:nth-child(3) {
+    right: 100%;
+    transition: 0.2s;
+    transition-delay: 0.1s;
+}
+
+a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #2196f3);
+}
+
+a:hover span:nth-child(2) {
+    top: 100%;
+    transition: 0.2s;
+    transition-delay: 0.05s;
+}
+
+a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #2196f3);
+}
+
+a:hover span:nth-child(4) {
+    bottom: 100%;
+    transition: 0.2s;
+    transition-delay: 0.15s;
+} */
+
+.hero {
+    margin: 70px 0;
+    flex-grow: 1;
+    z-index: -50;
+    position: absolute;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6));
+}
+
+.neon-light-vertical {
+    width: 8px;
+    min-height: 98%;
+    background: #2196f3;
+    border-radius: 15px;
+    top: 2%;
+    position: absolute;
+    box-shadow: 0 0 40px 5px #fff, inset 0 0 20px #fff, 0 0 160px 20px #08f, 0 0 320px 30px #08f, inset 0 0 20px #08f;
+    animation: neon-tick-light 7s linear infinite;
+    animation-delay: 5s;
+}
+
+.neon-light-horizontal {
+    width: 95%;
+    height: 8px;
+    background: #f32156;
+    border-radius: 15px;
+    left: 5%;
+    position: absolute;
+    box-shadow: 0 0 40px 5px #fff, inset 0 0 20px #fff, 0 0 160px 20px #f32156, 0 0 320px 30px #f32156, inset 0 0 20px #f32156;
+    animation: neon-tick-light 6s linear infinite;
+    animation-delay: 7.5s;
+}
+
+@keyframes neon-tick-light {
+    0%,
+    6%,
+    12% {
+        opacity: 10%;
+    }
+    3%,
+    9%,
+    15%,
+    28%,
+    35%,
+    68%,
+    75% {
+        opacity: 1;
+    }
+    31%,
+    70% {
+        opacity: 20%;
+    }
+}
+
+
+/* fanta */
+
+
+/* .fanta-stand:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+} */

@@ -1,0 +1,225 @@
+    .product-page-container {
+        margin: 10vh 10%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        z-index: -20;
+    }
+    
+    .product-page-info-container {
+        margin-top: 40px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: -20;
+    }
+    
+    .news-page-info-container {
+        margin-top: 0px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: -20;
+    }
+    
+    .product-page-info-container>div,
+    .news-page-info-container>div {
+        margin: 0 2%;
+    }
+    
+    .comment-container {
+        display: flex;
+        flex-flow: column;
+    }
+    
+    .comment-container>div {
+        text-align: center;
+        width: 50vw;
+        margin: 10px 0;
+        background: violet
+    }
+    
+    .product-page-photo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: stretch;
+        text-align: center;
+        flex: 1;
+    }
+    
+    .product-page-info {
+        flex: 1;
+        color: #fff;
+    }
+    
+    .product-page-more-info {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 10px;
+    }
+    
+    .product-page-more-info .product-property {
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+        padding: 1%;
+    }
+    
+    .product-page-more-info .product-property-map-place {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .product-page-more-info .product-property .product-property-title,
+    .product-page-more-info .product-property-map-place .product-property-title {
+        color: rgb(200, 200, 200);
+    }
+    
+    .product-page-main-photo {
+        flex: 3;
+    }
+    
+    .product-page-other-photo {
+        flex: 1;
+    }
+    
+    .product-page-other-photo img {
+        width: 12%;
+    }
+    
+    .comment-container {
+        display: flex;
+        flex-flow: column;
+    }
+    
+    .comment-container>div {
+        text-align: center;
+        width: 50vw;
+        margin: 10px 0;
+        border-radius: 25%;
+        background: violet
+    }
+    
+    .product-page-main-photo img {
+        max-height: 80%;
+        width: 50%;
+    }
+    
+    .food-page-main-photo img,
+    .game-page-main-photo img,
+    .news-page-main-photo img,
+    .place-page-main-photo img {
+        width: 100%;
+    }
+    
+    .popup {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .popup_open {
+        position: absolute;
+        left: 25%;
+        right: 25%;
+        top: 25%;
+        bottom: 25%;
+        margin: auto;
+        border-radius: 20px;
+        background: white;
+    }
+    /* 
+.wrap {
+    width: 1000px;
+    height: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.wrap .perspective {
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+
+.wrap .book-wrap {
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: all ease-out 0.6s;
+}
+
+.book {
+    width: 400px;
+    height: 600px;
+    background: url(http://img07.deviantart.net/747c/i/2015/114/b/0/typography_book_cover_thing_y_by_jiyulie-d5cujji.jpg) no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+}
+
+.title {
+    content: "";
+    height: 600px;
+    width: 30px;
+    position: absolute;
+    right: 0;
+    left: -401px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: #AB4747;
+    transform: rotateY(-80deg) translateX(-14px);
+}
+
+.book-back {
+    width: 400px;
+    height: 600px;
+    background-color: #D06255;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+    transform: rotate(180deg) translateZ(-30px) translateX(5px);
+}
+
+.book-back.text {
+    transform: rotateX(180deg);
+    position: absolute;
+    bottom: 30px;
+    padding: 20px;
+    text-align: left;
+}
+
+.book:hover {
+    transform: rotateY(20deg);
+}
+
+.book:focus {
+    transform: rotateY(180deg);
+} */
