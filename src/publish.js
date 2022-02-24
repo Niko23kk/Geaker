@@ -15,7 +15,6 @@ export class Publish extends React.Component {
             isLoaded: true,
             items: result,
           });
-          console.log(result);
         },
         (error) => {
           this.setState({
@@ -27,9 +26,7 @@ export class Publish extends React.Component {
   }
 
   render() {
-    console.log(1);
     if (this.state !== null) {
-      console.log(this.state);
       return (
         <table>
           {this.state.items.map((item) => (

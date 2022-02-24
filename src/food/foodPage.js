@@ -3,6 +3,7 @@ import "../css/catalogItem.css";
 import { StaticValue } from "../staticValue";
 import { useParams } from "react-router-dom";
 import { Comment } from "../comment";
+import { AddToFavorite } from "../addToFavorite";
 
 export function FoodPageGetParams() {
   let { id } = useParams();
@@ -38,7 +39,7 @@ export class FoodPage extends React.Component {
         if (res.status === 403) {
           window.location.href = "/notAccess";
         }
-        if (res.status === 404) {
+        if (res.status === 404 || res.status === 400) {
           window.location.href = "/notFound";
         }
         if (res.status === 500) {
@@ -62,22 +63,22 @@ export class FoodPage extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     if (this.state.isLoadedfood) {
       return (
         <div className="product-page-container">
           <div className="product-page-info-container">
             <div className="product-page-photo">
               <div className="food-page-main-photo">
-                <img src={this.state.food.photo} />
-              </div>
-            </div>
+                <img src={`${StaticValue.BaseURL}` + this.state.food.photo} />{" "}
+              </div>{" "}
+            </div>{" "}
             <div className="product-page-info">
               <h1> {this.state.food.name} </h1>{" "}
               <div> {this.state.food.description} </div>{" "}
-            </div>
-          </div>
-          <Comment id={this.props.id} />
+              <AddToFavorite id={this.props.id} className="favorite-button" />
+            </div>{" "}
+          </div>{" "}
+          <Comment id={this.props.id} />{" "}
         </div>
       );
     } else {

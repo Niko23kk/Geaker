@@ -8,22 +8,20 @@ export class PlaceCard extends React.Component {
     return (
       <div className="product-container">
         {this.props.items
-          .filter((comic) =>
-            comic.name
+          .filter((place) =>
+            place.name
               .toLowerCase()
               .includes(this.props.filterValue.toLowerCase())
           )
           .map((item) => (
-            <div className="place-item">
-              <Link to={`/placepage/${item.id}`}>
-                <div className="place-img">
-                  <img src={item.photo} alt="description of image" />
-                </div>
-                <div className="product-title">
-                  <span className="product-title-text"> {item.name} </span>
-                </div>
-              </Link>
-            </div>
+            <Link to={`/placepage/${item.id}`} className="place-item">
+              <div className="place-img">
+                <img src={item.photo} alt="description of image" />
+              </div>
+              <div className="product-title">
+                <span className="product-title-text"> {item.name} </span>
+              </div>
+            </Link>
           ))}
       </div>
     );

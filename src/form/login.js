@@ -5,6 +5,9 @@ import { StaticValue } from "../staticValue";
 export class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      error: "",
+    };
     this.clickLogin = this.clickLogin.bind(this);
   }
 
@@ -20,11 +23,33 @@ export class Login extends React.Component {
         password: this.state.password,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          status: res.status,
+        });
+        return res.json();
+      })
       .then(
         (result) => {
-          localStorage.setItem("token", result.token);
-          window.location.href = "/comics";
+          if (this.state.status === 200) {
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("idRole", result.idRole);
+            window.location.href = "/comics";
+          } else if (this.state.status === 400) {
+            this.setState({ error: result.message });
+          }
+          if (this.state.status === 401) {
+            window.location.href = "/notAuthorize";
+          }
+          if (this.state.status === 403) {
+            window.location.href = "/notAccess";
+          }
+          if (this.state.status === 404) {
+            window.location.href = "/notFound";
+          }
+          if (this.state.status === 500) {
+            window.location.href = "/internalServerError";
+          }
         },
         (error) => {
           this.setState({
@@ -51,6 +76,7 @@ export class Login extends React.Component {
           placeholder="Password"
           onChange={(e) => this.setState({ password: e.target.value })}
         />
+        <div className="form-error"> {this.state.error} </div>
         <input className="submit-input" type="submit" />
       </form>
     );

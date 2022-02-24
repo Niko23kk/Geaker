@@ -3,6 +3,7 @@ import "../css/catalogItem.css";
 import { StaticValue } from "../staticValue";
 import { useParams } from "react-router-dom";
 import { Comment } from "../comment";
+import { AddToFavorite } from "../addToFavorite";
 
 export function ComicsPageGetParams() {
   let { id } = useParams();
@@ -39,7 +40,7 @@ export class ComicsPage extends React.Component {
         if (res.status === 403) {
           window.location.href = "/notAccess";
         }
-        if (res.status === 404) {
+        if (res.status === 404 || res.status === 400) {
           window.location.href = "/notFound";
         }
         if (res.status === 500) {
@@ -77,7 +78,7 @@ export class ComicsPage extends React.Component {
         if (res.status === 403) {
           window.location.href = "/notAccess";
         }
-        if (res.status === 404) {
+        if (res.status === 404 || res.status === 400) {
           window.location.href = "/notFound";
         }
         if (res.status === 500) {
@@ -107,13 +108,30 @@ export class ComicsPage extends React.Component {
           <div className="product-page-info-container">
             <div className="product-page-photo">
               <div className="product-page-main-photo">
-                <img src={this.state.comics.photo} />
+                {this.state.comics.photo.includes("http") ? (
+                  <img
+                    src={this.state.comics.photo}
+                    alt="description of image"
+                  />
+                ) : (
+                  <img
+                    src={`${StaticValue.BaseURL}` + this.state.comics.photo}
+                    alt="description of image"
+                  />
+                )}
               </div>
               {this.state.photos !== null && (
                 <div className="product-page-other-photo">
-                  {this.state.photos.map((photo) => (
-                    <img src={photo.photo} />
-                  ))}
+                  {this.state.photos.map((photo) =>
+                    photo.photo.includes("http") ? (
+                      <img src={photo.photo} alt="description of image" />
+                    ) : (
+                      <img
+                        src={`${StaticValue.BaseURL}` + photo.photo}
+                        alt="description of image"
+                      />
+                    )
+                  )}
                 </div>
               )}
             </div>
@@ -152,6 +170,7 @@ export class ComicsPage extends React.Component {
                   </div>
                 </div>
               </div>
+              <AddToFavorite id={this.props.id} className="favorite-button" />
             </div>
           </div>
           <Comment id={this.props.id} />

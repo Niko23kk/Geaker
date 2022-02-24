@@ -1,5 +1,6 @@
 ul,
 li {
+    white-space: nowrap;
     font-size: 26px;
     margin: 0;
     padding: 0;
@@ -12,7 +13,7 @@ a {
 #nav {
     width: 100vw;
     text-align: center;
-    box-shadow: 0 0 20px 10px var(--menu-main-color);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--menu-main-color), inset 0 0 2rem var(--menu-main-color), 0 0 4rem var(--menu-main-color), inset 0 0 1rem var(--menu-main-color);
     display: fixed;
     z-index: 100;
 }

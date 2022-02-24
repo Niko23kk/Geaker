@@ -35,16 +35,27 @@ export class Registration extends React.Component {
       })
       .then(
         (result) => {
-          console.log(result);
           if (this.state.status === 200) {
             localStorage.setItem("token", result.token);
+            localStorage.setItem("idRole", result.idRole);
+            window.location.href = "/comics";
           } else if (this.state.status === 400) {
-            console.log(1);
             this.setState({ error: result.message });
+          }
+          if (this.state.status === 401) {
+            window.location.href = "/notAuthorize";
+          }
+          if (this.state.status === 403) {
+            window.location.href = "/notAccess";
+          }
+          if (this.state.status === 404) {
+            window.location.href = "/notFound";
+          }
+          if (this.state.status === 500) {
+            window.location.href = "/internalServerError";
           }
         },
         (err) => {
-          console.log(2);
           this.setState({
             error: err,
           });
@@ -61,35 +72,35 @@ export class Registration extends React.Component {
           placeholder="Login"
           name="login"
           onChange={(e) => this.setState({ login: e.target.value })}
-        />{" "}
+        />
         <input
           className="field-input"
           type="text"
           placeholder="First Name"
           name="name"
           onChange={(e) => this.setState({ name: e.target.value })}
-        />{" "}
+        />
         <input
           className="field-input"
           type="text"
           placeholder="Last Name"
           name="last_name"
           onChange={(e) => this.setState({ lastName: e.target.value })}
-        />{" "}
+        />
         <input
           className="field-input"
           type="text"
           placeholder="Email"
           name="email"
           onChange={(e) => this.setState({ email: e.target.value })}
-        />{" "}
+        />
         <input
           className="field-input"
           type="password"
           placeholder="Password"
           onChange={(e) => this.setState({ password: e.target.value })}
-        />{" "}
-        <div className="form-error"> {this.state.error} </div>{" "}
+        />
+        <div className="form-error"> {this.state.error} </div>
         <input className="submit-input" type="submit" />
       </form>
     );

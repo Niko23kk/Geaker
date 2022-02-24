@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { PlaceCard } from "./placeCard";
+import { FavoriteCard } from "./favoriteCard";
 import "../css/catalog.css";
 import { StaticValue } from "../staticValue";
 import { Navigate } from "react-router-dom";
 
-export class Place extends React.Component {
+export class Favorite extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +17,7 @@ export class Place extends React.Component {
     }
 
     componentDidMount() {
-        fetch("api/place", {
+        fetch("api/favoriteproduct", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,18 +57,18 @@ export class Place extends React.Component {
             );
     }
 
-    static renderProduct(product, filterValue) {
+    static renderFavorite(products, filterValue) {
         return ( <
             div className = "product-container" > {
-                product
-                .filter((comic) =>
-                    comic.name.toLowerCase().includes(filterValue.toLowerCase())
+                products
+                .filter((product) =>
+                    product.name.toLowerCase().includes(filterValue.toLowerCase())
                 )
                 .map((item) => ( <
                     div className = "product-item"
-                    onClick = { this.clickProduct } >
+                    onClick = { this.clickFavorite } >
                     <
-                    div className = "product-img" >
+                    div className = "comics-img" >
                     <
                     img src = { item.photo }
                     alt = "description of image" / >
@@ -103,9 +103,9 @@ export class Place extends React.Component {
                 onChange = { this.filterEvent }
                 /> <
                 /div> <
-                PlaceCard items = { this.state.items }
+                FavoriteCard items = { this.state.items }
                 filterValue = { this.state.filterValue } >
-                < /PlaceCard> <
+                < /FavoriteCard> <
                 /div>
             );
         } else {

@@ -7,7 +7,7 @@
 }
 
 .field-input {
-    margin: 20px 0;
+    margin: 10px 0;
     padding: 10px 20px;
     background: black;
     border: 1px white solid;
@@ -23,11 +23,19 @@
 }
 
 .form-error {
-    height: 30px;
+    /* height: 30px; */
     margin: 10px 0;
     font-size: 24px;
     color: var(--neon-text-color);
     text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-text-color), 0 0 3rem var(--neon-text-color);
+}
+
+.form-okay {
+    height: 30px;
+    margin: 10px 0;
+    font-size: 24px;
+    color: var(--neon-border-color);
+    text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-border-color), 0 0 3rem var(--neon-border-color);
 }
 
 .custom-error-container {
@@ -41,4 +49,79 @@
     font-size: 24px;
     color: var(--neon-text-color);
     text-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem var(--neon-text-color), 0 0 3rem var(--neon-text-color);
+}
+
+input[type=submit] {
+    margin: 20px 0;
+    padding: 10px 20px;
+    border: 1px white solid;
+    border-radius: 15px;
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
+    width: 20vw;
+    font-size: 20px;
+    color: white;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-text-color), inset 0 0 2rem var(--neon-text-color), 0 0 4rem var(--neon-text-color), inset 0 0 4rem var(--neon-text-color);
+}
+
+.input-comment {
+    width: 70vw;
+}
+
+.select-container,
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-mark {
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+    border: 1px white solid;
+    border-radius: 15px;
+    box-shadow: 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color);
+    width: 8vw;
+    font-size: 20px;
+}
+
+.select-filter {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    border: 1px white solid;
+    border-radius: 15px;
+    box-shadow: 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color);
+    width: 200px;
+    font-size: 20px;
+}
+
+.admin-form-title {
+    margin: 5px;
+    color: white;
+}
+
+input[type=checkbox] {
+    margin: 0 5px;
+    border: 1px white solid;
+    border-radius: 15px;
+    transform: scale(1.4);
+}
+
+input[type=file] {
+    color: white;
+    font-size: 24px;
+}
+
+.add-container {
+    vertical-align: center;
+    height: 100%;
+}
+
+.add-photo-container {
+    margin-top: 2%;
 }

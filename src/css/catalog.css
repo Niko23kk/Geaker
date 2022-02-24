@@ -1,17 +1,26 @@
 .catalog-container {
     margin: 30px 0;
     display: flex;
+    flex-direction: column;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    margin-right: 100px;
 }
 
 .filter-input {
-    position: absolute;
-    right: 40px;
-    padding: 10px 20px;
+    margin-top: 23px;
+    padding: 10px 25px;
+    height: 30px;
     background: none;
     border: none;
-    border-radius: 15px;
+    border-radius: 25px;
     box-shadow: 0 0 40px 5px #fff, inset 0 0 20px #fff, 0 0 160px 20px #08f, 0 0 320px 30px #08f, inset 0 0 20px #08f;
-    width: 20vw;
+    width: 200px;
     font-size: 20px;
     color: white;
 }
@@ -75,12 +84,9 @@
 }
 
 .product-item:hover,
-.news-item:hover {
+.news-item:hover,
+.place-item:hover {
     background: beige;
-}
-
-.product-container .product-title:hover {
-    color: #fff;
 }
 
 .product-container .product-title {
@@ -89,6 +95,16 @@
     color: #000;
     /* border: 1px #fff solid; */
     /* box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color); */
+}
+
+.catalog-container .select-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.catalog-container .select-container h2 {
+    margin: 0;
+    color: white;
 }
 
 .comics-img,

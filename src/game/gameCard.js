@@ -8,22 +8,25 @@ export class GameCard extends React.Component {
     return (
       <div className="product-container">
         {this.props.items
-          .filter((comic) =>
-            comic.name
+          .filter((game) =>
+            game.name
               .toLowerCase()
               .includes(this.props.filterValue.toLowerCase())
           )
+          .filter((game) =>
+            game.subcategory
+              .toLowerCase()
+              .includes(this.props.subcategoryValue.toLowerCase())
+          )
           .map((item) => (
-            <div className="product-item">
-              <Link to={`/gamepage/${item.id}`}>
-                <div className="game-img">
-                  <img src={item.photo} alt="description of image" />
-                </div>
-                <div className="product-title">
-                  <span className="product-title-text"> {item.name} </span>
-                </div>
-              </Link>
-            </div>
+            <Link to={`/gamepage/${item.id}`} className="product-item">
+              <div className="game-img">
+                <img src={item.photo} alt="description of image" />
+              </div>
+              <div className="product-title">
+                <span className="product-title-text"> {item.name} </span>
+              </div>
+            </Link>
           ))}
       </div>
     );

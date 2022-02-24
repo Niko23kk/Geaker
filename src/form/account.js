@@ -6,6 +6,8 @@ export class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: "",
+      okay: "",
       items: [],
       isLoaded: false,
       updateItem: [],
@@ -31,7 +33,7 @@ export class Account extends React.Component {
         if (res.status === 403) {
           window.location.href = "/notAccess";
         }
-        if (res.status === 404) {
+        if (res.status === 404 || res.status === 400) {
           window.location.href = "/notFound";
         }
         if (res.status === 500) {
@@ -44,7 +46,6 @@ export class Account extends React.Component {
             isLoaded: true,
             items: result,
           });
-          console.log(result);
         },
         (error) => {
           this.setState({
@@ -57,6 +58,7 @@ export class Account extends React.Component {
 
   clickUpdate(e) {
     e.preventDefault();
+    var data = new FormData(e.target);
     fetch(StaticValue.BaseURL + "api/user", {
       method: "Put",
       headers: {
@@ -64,13 +66,39 @@ export class Account extends React.Component {
         Authorization: "Bearer " + localStorage.token,
       },
       body: JSON.stringify({
-        login: this.state.login,
-        password: this.state.password,
+        login: data.get("login"),
+        name: data.get("name"),
+        lastName: data.get("lastName"),
+        email: data.get("email"),
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          status: res.status,
+        });
+        return res.json();
+      })
       .then(
-        (result) => {},
+        (result) => {
+          if (this.state.status === 200) {
+            alert("Ok");
+            this.setState({ okay: "Okay" });
+          } else if (this.state.status === 400) {
+            this.setState({ error: result.message });
+          }
+          if (this.state.status === 401) {
+            window.location.href = "/notAuthorize";
+          }
+          if (this.state.status === 403) {
+            window.location.href = "/notAccess";
+          }
+          if (this.state.status === 404) {
+            window.location.href = "/notFound";
+          }
+          if (this.state.status === 500) {
+            window.location.href = "/internalServerError";
+          }
+        },
         (error) => {
           this.setState({
             isLoaded: true,
@@ -82,53 +110,70 @@ export class Account extends React.Component {
 
   render() {
     if (this.state.isLoaded !== null) {
-      console.log(this.state.items);
       return (
         <div>
           {Array.isArray(this.state.items) ? (
             this.state.items.map((item) => (
-              <form className="form-container">
+              <form className="form-container" onSubmit={this.clickUpdate}>
+                <h3 className="form-title">Name</h3>
                 <input
                   className="field-input"
-                  value={item.name}
-                  onChange={(e) =>
-                    (this.state.updateItem.name = e.target.value)
-                  }
+                  name="name"
+                  defaultValue={item.name}
                 />
+                <h3 className="form-title">Last name</h3>
                 <input
                   className="field-input"
-                  value={item.lastName}
-                  onChange={(e) => {
-                    this.state.updateItem.lastName = e.target.value;
-                  }}
+                  name="lastName"
+                  defaultValue={item.lastName}
                 />
+                <h3 className="form-title">Email</h3>
                 <input
                   className="field-input"
-                  value={item.email}
-                  onChange={(e) =>
-                    (this.state.updateItem.email = e.target.value)
-                  }
+                  name="email"
+                  defaultValue={item.email}
                 />
+                <h3 className="form-title">Login</h3>
                 <input
                   className="field-input"
-                  value={item.login}
-                  onChange={(e) =>
-                    (this.state.updateItem.login = e.target.value)
-                  }
+                  name="login"
+                  defaultValue={item.login}
                 />
+                <div className="form-error"> {this.state.error} </div>
+                <div className="form-okay"> {this.state.okay} </div>
                 <input className="submit-input" type="submit" />
               </form>
             ))
           ) : (
-            <form className="form-container">
-              <input className="field-input" value={this.state.items.name} />
+            <form className="form-container" onSubmit={this.clickUpdate}>
+              <h3 className="form-title">Name</h3>
               <input
                 className="field-input"
-                value={this.state.items.lastName}
+                defaultValue={this.state.items.name}
+                name="name"
               />
-              <input className="field-input" value={this.state.items.email} />
-              <input className="field-input" value={this.state.items.login} />
-              <input className="submit-input" type="submit" readOnly />
+
+              <h3 className="form-title">Last name</h3>
+              <input
+                className="field-input"
+                defaultValue={this.state.items.lastName}
+                name="lastName"
+              />
+              <h3 className="form-title">Email</h3>
+              <input
+                className="field-input"
+                defaultValue={this.state.items.email}
+                name="email"
+              />
+              <h3 className="form-title">Login</h3>
+              <input
+                className="field-input"
+                defaultValue={this.state.items.login}
+                name="login"
+              />
+              <div className="form-error"> {this.state.error} </div>
+              <div className="form-okay"> {this.state.okay} </div>
+              <input className="submit-input" type="submit" />
             </form>
           )}
         </div>

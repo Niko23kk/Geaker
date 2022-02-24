@@ -11,7 +11,9 @@ export class Game extends React.Component {
     super(props);
     this.state = {
       items: [],
+      subcategorys: [],
       filterValue: "",
+      subcategoryValue: "",
     };
     this.filterEvent = this.filterEvent.bind(this);
   }
@@ -34,7 +36,7 @@ export class Game extends React.Component {
         if (res.status === 403) {
           window.location.href = "/notAccess";
         }
-        if (res.status === 404) {
+        if (res.status === 404 || res.status === 400) {
           window.location.href = "/notFound";
         }
         if (res.status === 500) {
@@ -46,6 +48,45 @@ export class Game extends React.Component {
           this.setState({
             isLoaded: true,
             items: result,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+
+    fetch("api/subcategory/3", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.token,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+        if (res.status === 401) {
+          window.location.href = "/notAuthorize";
+        }
+        if (res.status === 403) {
+          window.location.href = "/notAccess";
+        }
+        if (res.status === 404 || res.status === 400) {
+          window.location.href = "/notFound";
+        }
+        if (res.status === 500) {
+          window.location.href = "/internalServerError";
+        }
+      })
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            subcategorys: result,
           });
         },
         (error) => {
@@ -84,19 +125,35 @@ export class Game extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     if (this.state !== null) {
       return (
         <div className="catalog-container">
-          <input
-            type="text"
-            className="filter-input"
-            placeholder="Поиск"
-            onChange={this.filterEvent}
-          />
+          <div className="filter-container">
+            <div className="select-container">
+              <h2>Тип</h2>
+              <select
+                className="select-filter"
+                onChange={(e) =>
+                  this.setState({ subcategoryValue: e.target.value })
+                }
+              >
+                <option></option>
+                {this.state.subcategorys.map((item) => (
+                  <option>{item.name}</option>
+                ))}
+              </select>
+            </div>
+            <input
+              type="text"
+              className="filter-input"
+              placeholder="Поиск"
+              onChange={this.filterEvent}
+            />
+          </div>
           <GameCard
             items={this.state.items}
             filterValue={this.state.filterValue}
+            subcategoryValue={this.state.subcategoryValue}
           ></GameCard>
         </div>
       );
