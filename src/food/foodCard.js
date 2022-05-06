@@ -17,10 +17,14 @@ export class FoodCard extends React.Component {
           .map((item) => (
             <Link to={`/foodpage/${item.id}`} className="product-item">
               <div className="food-img">
-                <img
-                  src={`${StaticValue.BaseURL}` + item.photo}
-                  alt="description of image"
-                />
+                {item.photo.includes("http") ? (
+                  <img src={item.photo} alt="description of image" />
+                ) : (
+                  <img
+                    src={StaticValue.BaseURL + item.photo}
+                    alt="description of image"
+                  />
+                )}
               </div>
               <div className="product-title">
                 <span className="product-title-text"> {item.name} </span>

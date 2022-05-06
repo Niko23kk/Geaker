@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import "../css/catalog.css";
+import { StaticValue } from "../staticValue";
 
 export class NewsCard extends React.Component {
   render() {
@@ -16,13 +17,20 @@ export class NewsCard extends React.Component {
           .map((item) => (
             <Link to={`/newspage/${item.id}`} className="news-item">
               <div className="news-img">
-                <img src={item.photo} alt="description of image" />
+                {item.photo.includes("http") ? (
+                  <img src={item.photo} alt="description of image" />
+                ) : (
+                  <img
+                    src={StaticValue.BaseURL + item.photo}
+                    alt="description of image"
+                  />
+                )}
               </div>
               <div className="product-title">
                 <span className="product-title-text"> {item.name} </span>
               </div>
               <div className="news-description">
-                <span className="product-title-text">{item.description}</span>
+                <span className="product-title-text"> {item.description} </span>
               </div>
             </Link>
           ))}

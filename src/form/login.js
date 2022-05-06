@@ -13,7 +13,7 @@ export class Login extends React.Component {
 
   clickLogin(e) {
     e.preventDefault();
-    fetch(StaticValue.BaseURL + "api/login", {
+    fetch(`${StaticValue.BaseURL}/api/login`, {
       method: "Post",
       headers: {
         "Content-Type": "application/json",
@@ -62,18 +62,18 @@ export class Login extends React.Component {
 
   render() {
     return (
-      <form className="form-container" onSubmit={this.clickLogin}>
+      <form className="form-container login-form" onSubmit={this.clickLogin}>
         <input
           className="field-input"
           type="text"
-          placeholder="Login"
+          placeholder="Логин"
           name="login"
           onChange={(e) => this.setState({ login: e.target.value })}
         />
         <input
           className="field-input"
           type="password"
-          placeholder="Password"
+          placeholder="Пароль"
           onChange={(e) => this.setState({ password: e.target.value })}
         />
         <div className="form-error"> {this.state.error} </div>

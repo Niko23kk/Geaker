@@ -16,7 +16,7 @@ export class Account extends React.Component {
   }
 
   componentDidMount() {
-    fetch("api/user", {
+    fetch(`${StaticValue.BaseURL}/api/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export class Account extends React.Component {
   clickUpdate(e) {
     e.preventDefault();
     var data = new FormData(e.target);
-    fetch(StaticValue.BaseURL + "api/user", {
+    fetch(`${StaticValue.BaseURL}/api/user`, {
       method: "Put",
       headers: {
         "Content-Type": "application/json",
@@ -111,61 +111,65 @@ export class Account extends React.Component {
   render() {
     if (this.state.isLoaded !== null) {
       return (
-        <div>
+        <div className="account-container">
           {Array.isArray(this.state.items) ? (
             this.state.items.map((item) => (
-              <form className="form-container" onSubmit={this.clickUpdate}>
-                <h3 className="form-title">Name</h3>
+              <form
+                className="form-container account-form-container"
+                onSubmit={this.clickUpdate}
+              >
+                <h3 className="form-title">Имя</h3>
                 <input
+                  readOnly
                   className="field-input"
                   name="name"
                   defaultValue={item.name}
                 />
-                <h3 className="form-title">Last name</h3>
+                <h3 className="form-title">Фамилия</h3>
                 <input
+                  readOnly
                   className="field-input"
                   name="lastName"
                   defaultValue={item.lastName}
                 />
-                <h3 className="form-title">Email</h3>
+                <h3 className="form-title">Почта</h3>
                 <input
+                  readOnly
                   className="field-input"
                   name="email"
                   defaultValue={item.email}
                 />
-                <h3 className="form-title">Login</h3>
+                <h3 className="form-title">Логин</h3>
                 <input
+                  readOnly
                   className="field-input"
                   name="login"
                   defaultValue={item.login}
                 />
-                <div className="form-error"> {this.state.error} </div>
-                <div className="form-okay"> {this.state.okay} </div>
-                <input className="submit-input" type="submit" />
               </form>
             ))
           ) : (
             <form className="form-container" onSubmit={this.clickUpdate}>
-              <h3 className="form-title">Name</h3>
+              <h3 className="form-title">Имя</h3>
               <input
                 className="field-input"
                 defaultValue={this.state.items.name}
                 name="name"
               />
 
-              <h3 className="form-title">Last name</h3>
+              <h3 className="form-title">Фамилия</h3>
               <input
                 className="field-input"
                 defaultValue={this.state.items.lastName}
                 name="lastName"
               />
-              <h3 className="form-title">Email</h3>
+              <h3 className="form-title">Почта</h3>
               <input
                 className="field-input"
                 defaultValue={this.state.items.email}
                 name="email"
               />
-              <h3 className="form-title">Login</h3>
+              <h3 className="form-title">Логин</h3>
               <input
                 className="field-input"
                 defaultValue={this.state.items.login}

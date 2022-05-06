@@ -1,0 +1,411 @@
+.painter-body {
+    all: initial;
+    --font-size-base: 18px;
+    --line-height-base: 1.5;
+    --color-text: #1d1d1d;
+    --color-background: #ffffff;
+    box-sizing: border-box;
+    font-family: 'Comic Sans', cursive;
+    display: flex;
+    justify-content: center;
+}
+
+.painter-body *,
+.painter-body *:before,
+.painter-body *:after {
+    box-sizing: inherit;
+}
+
+.painter-body {
+    margin: 20px;
+    /* min-width: 1100px; */
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    /* width: 100%;
+    height: 100%; */
+}
+
+.painter-body section {
+    /* flex-grow: 1; */
+    width: 1000px;
+}
+
+.painter-body input {
+    outline: 0;
+    border: 0;
+}
+
+.painter-body input[type="range"] {
+    display: block;
+    width: 100%;
+}
+
+.painter-body aside {
+    flex-basis: 196px;
+    background-color: #f1f1f1;
+    padding: 1.2em;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.painter-body aside>div:first-of-type {
+    flex-grow: 1;
+}
+
+.painter-body header {
+    margin-top: -20px;
+    /* min-width: 1100px; */
+    position: absolute;
+    background-color: #f5f5f5;
+    width: 100vw;
+    height: 800px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem;
+    border: 2rem solid;
+    border-image-slice: 1;
+    border-image-source: repeating-conic-gradient( hsl(0, 100%, 50%), hsl(36, 100%, 50%), hsl(108, 100%, 50%), hsl(211, 100%, 50%), hsl(247, 100%, 50%), hsl(277, 100%, 50%), hsl(320, 100%, 50%), hsl(0, 100%, 50%));
+}
+
+.painter-body header.hidden {
+    animation: fadeOut 1s ease-in-out forwards;
+    pointer-events: none;
+}
+
+.painter-body header a {
+    padding: 0 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.painter-body header a:nth-of-type(1) {
+    color: hsl(36, 100%, 40%);
+}
+
+.painter-body header a:nth-of-type(2) {
+    color: hsl(108, 100%, 25%);
+}
+
+.painter-body header a:nth-of-type(3) {
+    color: hsl(211, 100%, 40%);
+}
+
+.painter-body header a:nth-of-type(4) {
+    color: hsl(277, 100%, 40%);
+}
+
+.painter-body header a:hover,
+.painter-body header a:active {
+    opacity: 1;
+}
+
+.painter-body h1 {
+    font-weight: 400;
+    font-size: 8rem;
+    letter-spacing: -0.3rem;
+    margin: 0 0 3rem;
+    background: linear-gradient( 90deg, hsl(0, 100%, 50%), hsl(211, 100%, 50%) 50%, hsl(108, 100%, 40%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.painter-body .blob-btn {
+    z-index: 1;
+    position: relative;
+    padding: 1.5rem 4rem;
+    margin-bottom: 30px;
+    font-size: 1.25rem;
+    text-align: center;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 3rem;
+    animation: colorShift 13s ease infinite forwards;
+    box-shadow: 0 0px 15px currentColor;
+    margin-bottom: 3rem;
+    display: inline-flex;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.painter-body .blob-text {
+    letter-spacing: 1px;
+    color: currentColor;
+}
+
+.painter-body .blob-btn:before {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 4px solid currentColor;
+    border-radius: 30px;
+}
+
+.painter-body .blob-btn:after {
+    content: "";
+    z-index: -2;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s 0.2s;
+    border-radius: 30px;
+}
+
+.painter-body .blob-btn:hover .blob-text {
+    color: #ffffff;
+    border-radius: 30px;
+}
+
+.painter-body .blob-btn:hover:after {
+    transition: all 0.3s;
+    left: 0;
+    top: 0;
+    border-radius: 30px;
+}
+
+.painter-body .blob-btn__inner {
+    z-index: -1;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background: #ffffff;
+}
+
+.painter-body .blob-btn__blobs {
+    position: relative;
+    display: block;
+    height: 100%;
+    filter: url("#goo");
+}
+
+.painter-body .blob-btn__blob {
+    position: absolute;
+    top: 2px;
+    width: 25%;
+    height: 100%;
+    background: currentColor;
+    border-radius: 100%;
+    transform: translate3d(0, 150%, 0) scale(1.7);
+    transition: transform 0.4s ease;
+}
+
+@supports (filter: url("#goo")) {
+    .blob-btn__blob {
+        transform: translate3d(0, 150%, 0) scale(1.4);
+    }
+}
+
+.painter-body .blob-btn__blob:nth-child(1) {
+    left: 0%;
+    transition-delay: 0s;
+}
+
+.painter-body .blob-btn__blob:nth-child(2) {
+    left: 30%;
+    transition-delay: 0.08s;
+}
+
+.painter-body .blob-btn__blob:nth-child(3) {
+    left: 60%;
+    transition-delay: 0.16s;
+}
+
+.painter-body .blob-btn__blob:nth-child(4) {
+    left: 90%;
+    transition-delay: 0.24s;
+}
+
+.painter-body .blob-btn:hover .blob-btn__blob {
+    transform: translateZ(0) scale(1.7);
+}
+
+@supports (filter: url("#goo")) {
+    .blob-btn:hover .blob-btn__blob {
+        transform: translateZ(0) scale(1.4);
+    }
+}
+
+.painter-body .preview {
+    width: 130px;
+    height: 130px;
+    border: 2px solid var(--color-text);
+    position: relative;
+}
+
+.painter-body .preview__brush {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    border-radius: 100%;
+}
+
+@keyframes colorShift {
+    0% {
+        color: hsl(0, 100%, 40%);
+    }
+    10% {
+        color: hsl(36, 100%, 40%);
+    }
+    20% {
+        color: hsl(72, 100%, 30%);
+    }
+    30% {
+        color: hsl(108, 100%, 30%);
+    }
+    40% {
+        color: hsl(144, 100%, 30%);
+    }
+    50% {
+        color: hsl(180, 100%, 20%);
+    }
+    60% {
+        color: hsl(211, 100%, 40%);
+    }
+    70% {
+        color: hsl(247, 100%, 40%);
+    }
+    80% {
+        color: hsl(277, 100%, 50%);
+    }
+    90% {
+        color: hsl(301, 100%, 40%);
+    }
+    100% {
+        color: hsl(320, 100%, 30%);
+    }
+    100% {
+        color: hsl(350, 100%, 40%);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.painter-body .btn {
+    display: inline-flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    text-decoration: none;
+    padding: 0.5em;
+    color: var(--color-text);
+    background-color: #bbb;
+    height: 45px;
+}
+
+.painter-body .btn--main {
+    background-color: hsl(211, 100%, 75%);
+    margin-bottom: 0.75rem;
+}
+
+.painter-body .btn--block {
+    display: flex;
+    width: 100%;
+}
+
+.painter-body .btn--tool {
+    background-color: #c1c1c1;
+    width: 100%;
+    height: 100%;
+    padding: 0.25em 0.3em;
+}
+
+.painter-body .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 0.25rem;
+    margin-bottom: 0.5em;
+}
+
+.painter-body .btn--color {
+    -webkit-appearance: none;
+    border: none;
+    width: 100%;
+    height: 28px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.painter-body input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.painter-body input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
+
+.painter-body .btn--main {}
+
+.painter-body input[type="checkbox"] {
+    display: none;
+}
+
+.painter-body .tool-section {
+    padding-bottom: 0.5rem;
+}
+
+.painter-body .tool-section--lrg {
+    padding-bottom: 1rem;
+}
+
+.painter-body .btn--active {
+    background-color: hsl(211, 100%, 70%);
+}
+
+.painter-body .btn--dream-active {
+    background-image: repeating-conic-gradient( hsl(0, 100%, 70%), hsl(36, 100%, 70%), hsl(108, 100%, 70%), hsl(211, 100%, 70%), hsl(247, 100%, 70%), hsl(277, 100%, 70%), hsl(320, 100%, 70%), hsl(0, 100%, 70%));
+}
+
+.painter-body .btn--eraser-active {
+    background-color: hsl(108, 100%, 70%);
+}
+
+.painter-body .btn--width-active {
+    background-color: hsl(0, 100%, 70%);
+}
+
+.painter-body *[disabled],
+.painter-body *[disabled]+label {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.canvas {
+    border: 1px black solid;
+}
+
+.tool-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

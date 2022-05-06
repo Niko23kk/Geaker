@@ -5,13 +5,15 @@ import { GameCard } from "./gameCard";
 import "../css/catalog.css";
 import { StaticValue } from "../staticValue";
 import { Navigate } from "react-router-dom";
+import { canCoinUpdate } from "..";
+import { AddCoinCounter } from "../reducer/coinsReducer";
 
 export class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      subcategorys: [],
+      subcategories: [],
       filterValue: "",
       subcategoryValue: "",
     };
@@ -19,7 +21,7 @@ export class Game extends React.Component {
   }
 
   componentDidMount() {
-    fetch("api/game", {
+    fetch(`${StaticValue.BaseURL}/api/game`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +60,7 @@ export class Game extends React.Component {
         }
       );
 
-    fetch("api/subcategory/3", {
+    fetch(`${StaticValue.BaseURL}/api/subcategory/3`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +88,7 @@ export class Game extends React.Component {
         (result) => {
           this.setState({
             isLoaded: true,
-            subcategorys: result,
+            subcategories: result,
           });
         },
         (error) => {
@@ -98,27 +100,6 @@ export class Game extends React.Component {
       );
   }
 
-  static renderGame(game, filterValue) {
-    return (
-      <div className="product-container">
-        {game
-          .filter((comic) =>
-            comic.name.toLowerCase().includes(filterValue.toLowerCase())
-          )
-          .map((item) => (
-            <div className="product-item" onClick={this.clickGame}>
-              <div className="game-img">
-                <img src={item.photo} alt="description of image" />
-              </div>
-              <div className="product-title">
-                <span className="product-title-text"> {item.name} </span>
-              </div>
-            </div>
-          ))}
-      </div>
-    );
-  }
-
   filterEvent(event) {
     this.setState({ filterValue: event.target.value });
     event.preventDefault();
@@ -128,27 +109,28 @@ export class Game extends React.Component {
     if (this.state !== null) {
       return (
         <div className="catalog-container">
+          {canCoinUpdate ? <AddCoinCounter value={4}> </AddCoinCounter> : <></>}
           <div className="filter-container">
-            <div className="select-container">
-              <h2>Тип</h2>
-              <select
-                className="select-filter"
-                onChange={(e) =>
-                  this.setState({ subcategoryValue: e.target.value })
-                }
-              >
-                <option></option>
-                {this.state.subcategorys.map((item) => (
-                  <option>{item.name}</option>
-                ))}
-              </select>
-            </div>
             <input
               type="text"
               className="filter-input"
               placeholder="Поиск"
               onChange={this.filterEvent}
             />
+            <div className="select-container">
+              <h3> Тип </h3>
+              <select
+                className="select-filter"
+                onChange={(e) =>
+                  this.setState({ subcategoryValue: e.target.value })
+                }
+              >
+                <option> </option>
+                {this.state.subcategories.map((item) => (
+                  <option> {item.name} </option>
+                ))}
+              </select>
+            </div>
           </div>
           <GameCard
             items={this.state.items}

@@ -13,7 +13,7 @@ export class Registration extends React.Component {
 
   clickLogin(e) {
     e.preventDefault();
-    fetch(StaticValue.BaseURL + "api/registration", {
+    fetch(`${StaticValue.BaseURL}/api/registration`, {
       method: "Post",
       headers: {
         "Content-Type": "application/json",
@@ -69,35 +69,35 @@ export class Registration extends React.Component {
         <input
           className="field-input"
           type="text"
-          placeholder="Login"
+          placeholder="Логин"
           name="login"
           onChange={(e) => this.setState({ login: e.target.value })}
         />
         <input
           className="field-input"
           type="text"
-          placeholder="First Name"
+          placeholder="Имя"
           name="name"
           onChange={(e) => this.setState({ name: e.target.value })}
         />
         <input
           className="field-input"
           type="text"
-          placeholder="Last Name"
+          placeholder="Фамилия"
           name="last_name"
           onChange={(e) => this.setState({ lastName: e.target.value })}
         />
         <input
           className="field-input"
           type="text"
-          placeholder="Email"
+          placeholder="Почта"
           name="email"
           onChange={(e) => this.setState({ email: e.target.value })}
         />
         <input
           className="field-input"
           type="password"
-          placeholder="Password"
+          placeholder="Пароль"
           onChange={(e) => this.setState({ password: e.target.value })}
         />
         <div className="form-error"> {this.state.error} </div>

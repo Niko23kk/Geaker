@@ -5,6 +5,8 @@ import { FoodCard } from "./foodCard";
 import "../css/catalog.css";
 import { StaticValue } from "../staticValue";
 import { useParams } from "react-router-dom";
+import { canCoinUpdate } from "..";
+import { AddCoinCounter } from "../reducer/coinsReducer";
 
 export function FoodGetParams() {
     let { type } = useParams();
@@ -77,39 +79,10 @@ export class AllFood extends React.Component {
         event.preventDefault();
     }
 
-    static renderfood(food, filterValue) {
-        return ( <
-            div className = "product-container" > {
-                food
-                .filter((comic) =>
-                    comic.name.toLowerCase().includes(filterValue.toLowerCase())
-                )
-                .map((item) => ( <
-                    div className = "product-item"
-                    onClick = { this.clickfood } >
-                    <
-                    div className = "food-img" >
-                    <
-                    img src = { item.photo }
-                    alt = "description of image" / >
-                    <
-                    /div> <
-                    div className = "product-title" >
-                    <
-                    span className = "product-title-text" > { item.name } < /span> <
-                    /div> <
-                    /div>
-                ))
-            } <
-            /div>
-        );
-    }
-
     render() {
         if (this.state !== null) {
             return ( <
-                div className = "catalog-container" >
-                <
+                div className = "catalog-container-vertical" > { canCoinUpdate ? < AddCoinCounter value = { 4 } > < /AddCoinCounter> : <></ > } <
                 div className = "filter-container" >
                 <
                 input type = "text"
@@ -180,34 +153,6 @@ export class Food extends React.Component {
             );
     }
 
-    static renderfood(food, filterValue) {
-        return ( <
-            div className = "product-container" > {
-                food
-                .filter((comic) =>
-                    comic.name.toLowerCase().includes(filterValue.toLowerCase())
-                )
-                .map((item) => ( <
-                    div className = "product-item"
-                    onClick = { this.clickfood } >
-                    <
-                    div className = "food-img" >
-                    <
-                    img src = { item.photo }
-                    alt = "description of image" / >
-                    <
-                    /div> <
-                    div className = "product-title" >
-                    <
-                    span className = "product-title-text" > { item.name } < /span> <
-                    /div> <
-                    /div>
-                ))
-            } <
-            /div>
-        );
-    }
-
     filterEvent(event) {
         this.setState({ filterValue: event.target.value });
         event.preventDefault();
@@ -216,8 +161,7 @@ export class Food extends React.Component {
     render() {
         if (this.state !== null) {
             return ( <
-                div className = "catalog-container" >
-                <
+                div className = "catalog-container-vertical" > { canCoinUpdate ? < AddCoinCounter value = { 4 } > < /AddCoinCounter> : <></ > } <
                 div className = "filter-container" >
                 <
                 input type = "text"
@@ -288,34 +232,6 @@ export class Drink extends React.Component {
             );
     }
 
-    static renderfood(food, filterValue) {
-        return ( <
-            div className = "product-container" > {
-                food
-                .filter((comic) =>
-                    comic.name.toLowerCase().includes(filterValue.toLowerCase())
-                )
-                .map((item) => ( <
-                    div className = "product-item"
-                    onClick = { this.clickfood } >
-                    <
-                    div className = "food-img" >
-                    <
-                    img src = { item.photo }
-                    alt = "description of image" / >
-                    <
-                    /div> <
-                    div className = "product-title" >
-                    <
-                    span className = "product-title-text" > { item.name } < /span> <
-                    /div> <
-                    /div>
-                ))
-            } <
-            /div>
-        );
-    }
-
     filterEvent(event) {
         this.setState({ filterValue: event.target.value });
         event.preventDefault();
@@ -324,8 +240,7 @@ export class Drink extends React.Component {
     render() {
         if (this.state !== null) {
             return ( <
-                div className = "catalog-container" >
-                <
+                div className = "catalog-container-vertical" > { canCoinUpdate ? < AddCoinCounter value = { 4 } > < /AddCoinCounter> : <></ > } <
                 div className = "filter-container" >
                 <
                 input type = "text"

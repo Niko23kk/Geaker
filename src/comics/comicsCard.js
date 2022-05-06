@@ -31,7 +31,7 @@ export class ComicsCard extends React.Component {
                   <img src={item.photo} alt="description of image" />
                 ) : (
                   <img
-                    src={`${StaticValue.BaseURL}` + item.photo}
+                    src={StaticValue.BaseURL + item.photo}
                     alt="description of image"
                   />
                 )}

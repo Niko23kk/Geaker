@@ -1,9 +1,12 @@
 import React from "react";
 import "../css/catalogItem.css";
+import "../css/adaptive.css";
 import { StaticValue } from "../staticValue";
 import { useParams } from "react-router-dom";
 import { Comment } from "../comment";
 import { AddToFavorite } from "../addToFavorite";
+import { canCoinUpdate } from "..";
+import { AddCoinCounter } from "../reducer/coinsReducer";
 
 export function ComicsPageGetParams() {
   let { id } = useParams();
@@ -19,6 +22,8 @@ export class ComicsPage extends React.Component {
       photos: [],
       isLoadedComics: false,
       isLoadedPhotos: false,
+      isOpen: false,
+      curPhoto: {},
     };
   }
 
@@ -101,21 +106,32 @@ export class ComicsPage extends React.Component {
       );
   }
 
+  handleShowDialog = (photo) => {
+    this.setState({ isOpen: !this.state.isOpen, curPhoto: photo });
+  };
+
   render() {
     if (this.state.isLoadedComics && this.state.isLoadedPhotos) {
       return (
         <div className="product-page-container">
+          {canCoinUpdate ? <AddCoinCounter value={4}> </AddCoinCounter> : <></>}
           <div className="product-page-info-container">
             <div className="product-page-photo">
               <div className="product-page-main-photo">
                 {this.state.comics.photo.includes("http") ? (
                   <img
+                    onClick={() =>
+                      this.handleShowDialog(this.state.comics.photo)
+                    }
                     src={this.state.comics.photo}
                     alt="description of image"
                   />
                 ) : (
                   <img
-                    src={`${StaticValue.BaseURL}` + this.state.comics.photo}
+                    onClick={() =>
+                      this.handleShowDialog(this.state.comics.photo)
+                    }
+                    src={StaticValue.BaseURL + this.state.comics.photo}
                     alt="description of image"
                   />
                 )}
@@ -124,13 +140,32 @@ export class ComicsPage extends React.Component {
                 <div className="product-page-other-photo">
                   {this.state.photos.map((photo) =>
                     photo.photo.includes("http") ? (
-                      <img src={photo.photo} alt="description of image" />
+                      <img
+                        onClick={() => this.handleShowDialog(photo.photo)}
+                        src={photo.photo}
+                        alt="description of image"
+                      />
                     ) : (
                       <img
-                        src={`${StaticValue.BaseURL}` + photo.photo}
+                        onClick={() => this.handleShowDialog(photo.photo)}
+                        src={StaticValue.BaseURL + photo.photo}
                         alt="description of image"
                       />
                     )
+                  )}
+                  {this.state.isOpen && (
+                    <dialog
+                      className="popup"
+                      style={{ position: "absolute" }}
+                      open
+                      onClick={this.handleShowDialog}
+                    >
+                      <img
+                        src={this.state.curPhoto}
+                        onClick={this.handleShowDialog}
+                        alt="no image"
+                      />
+                    </dialog>
                   )}
                 </div>
               )}

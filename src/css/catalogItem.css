@@ -1,10 +1,10 @@
     .product-page-container {
-        margin: 2% 10%;
+        margin: 3% 10%;
         display: flex;
         flex-flow: column;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: black;
         /* z-index: -20; */
     }
     
@@ -13,7 +13,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* z-index: -20; */
     }
     
     .news-page-info-container {
@@ -30,9 +29,11 @@
         margin: 0 2%;
     }
     
-    .comment-container {
+    .comment-container,
+    .forum-message-container {
         display: flex;
         flex-flow: column;
+        align-items: center;
     }
     
     .product-page-photo {
@@ -46,7 +47,14 @@
     
     .product-page-info {
         flex: 1;
-        color: #fff;
+    }
+    
+    .product-page-info h1 {
+        color: var(--h-main-color);
+    }
+    
+    .product-page-info div {
+        color: var(--text-main-color);
     }
     
     .product-page-more-info {
@@ -70,7 +78,7 @@
     
     .product-page-more-info .product-property .product-property-title,
     .product-page-more-info .product-property-map-place .product-property-title {
-        color: rgb(200, 200, 200);
+        color: var(--h-main-color);
     }
     
     .product-page-main-photo {
@@ -85,13 +93,8 @@
         width: 12%;
     }
     
-    .comment-container {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-    }
-    
     .comment-container>div {
+        text-decoration: none;
         overflow: hidden;
         word-wrap: wrap;
         text-align: center;
@@ -101,7 +104,27 @@
         border-radius: 25px;
         background: white;
         color: black;
-        box-shadow: 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color);
+        border: black 2px solid;
+    }
+    
+    .forum-message-container .container-forum-message {
+        text-decoration: none;
+        overflow: hidden;
+        word-wrap: wrap;
+        text-align: center;
+        margin: 10px 0;
+        width: 80vw;
+        padding: 10px 30px 20px 30px;
+        border-radius: 25px;
+        background: white;
+        color: black;
+        border: black 2px solid;
+    }
+    
+    .message-like-container {
+        display: flex;
+        flex-direction: row;
+        width: 80vw;
     }
     
     textarea {
@@ -118,12 +141,16 @@
         padding-top: 10px;
         text-align: left;
         font-size: 24px;
+        font-weight: 600;
+        color: var(--h-main-color);
     }
     
     .text-comment {
         text-align: left;
         font-size: 20px;
         word-wrap: wrap;
+        overflow-wrap: break-word;
+        color: var(--text-main-color);
     }
     
     .mark-comment {
@@ -147,19 +174,21 @@
         width: 80px;
         margin: 20px 0;
         padding: 20px 20px;
-        border: 1px white solid;
+        border: 2px black solid;
         border-radius: 35px;
-        box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
+        background-color: var(--text-main-color);
         font-size: 20px;
-        color: white;
+        color: white !important;
+        font-weight: 600;
     }
     
     .favorite-button:hover {
         cursor: pointer;
-        box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-text-color), inset 0 0 2rem var(--neon-text-color), 0 0 4rem var(--neon-text-color), inset 0 0 4rem var(--neon-text-color);
+        background-color: var(--header-menu-color);
     }
     
     .popup {
+        z-index: 100;
         position: fixed;
         width: 100%;
         height: 100%;
@@ -167,20 +196,82 @@
         left: 0;
         right: 0;
         bottom: 0;
-        margin: auto;
         background-color: rgba(0, 0, 0, 0.5);
     }
     
-    .popup_open {
+    .popup img {
         position: absolute;
         left: 25%;
         right: 25%;
-        top: 25%;
-        bottom: 25%;
+        top: 10%;
+        width: 30%;
         margin: auto;
-        border-radius: 20px;
         background: white;
     }
+    
+    .forum-them-container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+    
+    .forum-them-container>a,
+    .startmessage-container {
+        text-decoration: none;
+        overflow: hidden;
+        word-wrap: wrap;
+        text-align: center;
+        padding: 15px 30px;
+        border-radius: 25px;
+        background: white;
+        color: black;
+        border: black 2px solid;
+    }
+    
+    .forum-them-container>a {
+        width: 70vw;
+        margin: 10px 0;
+    }
+    
+    .startmessage-container {
+        width: 77vw;
+        margin: 20px 0 50px 0;
+    }
+    
+    .mark-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    .positive-mark,
+    .negative-mark {
+        cursor: pointer;
+        vertical-align: middle;
+        flex: 1;
+        padding: 20px;
+        width: 50px;
+    }
+    
+    .negative-mark {
+        transform: rotate(180deg);
+    }
+    
+    .mark-container .nonactive {
+        opacity: 50%;
+    }
+    /* .forum-them-container>div {
+        text-decoration: none;
+        overflow: hidden;
+        word-wrap: wrap;
+        text-align: center;
+        margin: 10px 0;
+        width: 70vw;
+        padding: 15px 30px;
+        border-radius: 25px;
+        background: white;
+        color: black;
+        border: black 2px solid;
+    } */
     /* 
 .wrap {
     width: 1000px;

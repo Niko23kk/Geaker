@@ -11,12 +11,14 @@ export class AdminAddComics extends React.Component {
     this.state = {
       error: "",
       publisher: [],
+      loadedFile: "",
     };
     this.clickAdd = this.clickAdd.bind(this);
+    this.clickAddPhoto = this.clickAddPhoto.bind(this);
   }
 
   componentDidMount() {
-    fetch("api/publisher", {
+    fetch(`${StaticValue.BaseURL}/api/publisher`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +67,7 @@ export class AdminAddComics extends React.Component {
         publishId = publish.id;
       }
     });
-    fetch(`${StaticValue.BaseURL}api/comics`, {
+    fetch(`${StaticValue.BaseURL}/api/comics`, {
       method: "Post",
       headers: {
         "Content-Type": "application/json",
@@ -73,11 +75,13 @@ export class AdminAddComics extends React.Component {
       },
       body: JSON.stringify({
         name: data.get("name"),
-        photo: "/Photos/" + data.get("photo"),
+        photo: data.get("photo").includes("http")
+          ? data.get("photo")
+          : "/Photos/" + data.get("photo"),
         description: data.get("description"),
         pages: parseInt(data.get("pages")),
         hardCover:
-          data.get("hardCOver") == null ? false : data.get("hardCOver"),
+          data.get("hardCover") == null ? false : data.get("hardCOver"),
         subcategory: data.get("subcategory"),
         format: {
           height: parseInt(data.get("height")),
@@ -96,6 +100,57 @@ export class AdminAddComics extends React.Component {
         (result) => {
           if (this.state.status === 200) {
             alert("Ok");
+            this.setState({ okaymain: "Отправлено", errormain: "" });
+          } else if (this.state.status === 400) {
+            this.setState({ errormain: result.message });
+          }
+          if (this.state.status === 401) {
+            window.location.href = "/notAuthorize";
+          }
+          if (this.state.status === 403) {
+            window.location.href = "/notAccess";
+          }
+          if (this.state.status === 404) {
+            window.location.href = "/notFound";
+          }
+          if (this.state.status === 500) {
+            window.location.href = "/internalServerError";
+          }
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
+  clickAddPhoto(e) {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("uploadedFile", this.state.selectedFile);
+    fetch(`${StaticValue.BaseURL}/api/addPhoto`, {
+      method: "Post",
+      headers: {
+        Authorization: "Bearer " + localStorage.token,
+      },
+      body: data,
+    })
+      .then((res) => {
+        this.setState({
+          status: res.status,
+        });
+        return res.json();
+      })
+      .then(
+        (result) => {
+          if (this.state.status === 200) {
+            alert("Ok");
+            this.setState({
+              okay: result.message,
+              loadedFile: result.message,
+            });
           } else if (this.state.status === 400) {
             this.setState({ error: result.message });
           }
@@ -124,89 +179,110 @@ export class AdminAddComics extends React.Component {
   render() {
     if (localStorage.idRole == 1) {
       return (
-        <form className="form-container" onSubmit={this.clickAdd}>
-          <h3 className="admin-form-title">Name</h3>
-          <input
-            className="field-input"
-            type="text"
-            placeholder="Name"
-            name="name"
-          />
-          <h3 className="admin-form-title">Photo</h3>
-          <input
-            className="field-input"
-            type="text"
-            placeholder="Photo"
-            name="photo"
-          />
-          <h3 className="admin-form-title">Description</h3>
-          <textarea
-            className="field-input input-comment"
-            type="text"
-            placeholder="Description"
-            name="description"
-          />
-          <h3 className="admin-form-title">Pages</h3>
-          <input
-            className="field-input"
-            type="text"
-            placeholder="Pages"
-            name="pages"
-            onChange={(e) =>
-              (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
-            }
-          />
-          <div className="select-container">
-            <h3 className="admin-form-title">Hard Cover</h3>
-            <select
-              className="select-mark"
-              name="hardCover"
-              defaultValue="false"
-            >
-              <option>true</option>
-              <option>false</option>
+        <div>
+          <form
+            className="form-container add-container"
+            onSubmit={this.clickAddPhoto}
+          >
+            <div class="file-input">
+              <input
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                onChange={(e) =>
+                  this.setState({ selectedFile: e.target.files[0] })
+                }
+              />
+            </div>
+            <div className="form-error"> {this.state.error} </div>
+            <div className="form-okay"> {this.state.okay} </div>
+            <input className="submit-input" type="submit" />
+          </form>
+          <form className="form-container" onSubmit={this.clickAdd}>
+            <h3 className="admin-form-title"> Название </h3>
+            <input
+              className="field-input"
+              type="text"
+              placeholder="Имя"
+              name="name"
+            />
+            <h3 className="admin-form-title"> Фото </h3>
+            <input
+              className="field-input"
+              type="text"
+              value={this.state.loadedFile}
+              placeholder="Фото"
+              name="photo"
+            />
+            <h3 className="admin-form-title"> Описание </h3>
+            <textarea
+              className="field-input input-comment"
+              type="text"
+              placeholder="Описание"
+              name="description"
+            />
+            <h3 className="admin-form-title"> Количество страниц </h3>
+            <input
+              className="field-input"
+              type="text"
+              placeholder="Количество страниц"
+              name="pages"
+              onChange={(e) =>
+                (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
+              }
+            />
+            <div className="select-container">
+              <h3 className="admin-form-title"> Твердый переплет </h3>
+              <select
+                className="select-mark"
+                name="hardCover"
+                defaultValue="false"
+              >
+                <option> true </option> <option> false </option>
+              </select>
+            </div>
+            <h3 hidden className="admin-form-title">
+              Подкатегория
+            </h3>
+            <input
+              hidden
+              className="field-input"
+              type="text"
+              placeholder="Подкатегория"
+              name="subcategory"
+              value={1}
+            />
+            <h3 className="admin-form-title"> Длина </h3>
+            <input
+              className="field-input"
+              type="text"
+              placeholder="Длина"
+              name="height"
+              onChange={(e) =>
+                (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
+              }
+            />
+            <h3 className="admin-form-title"> Ширина </h3>
+            <input
+              className="field-input"
+              type="text"
+              placeholder="Ширина"
+              name="width"
+              onChange={(e) =>
+                (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
+              }
+            />
+            <h3 className="admin-form-title"> Издатель </h3>
+            <select className="select-filter" defaultValue="" name="publisher">
+              <option> </option>
+              {this.state.publisher.map((item) => (
+                <option> {item.name} </option>
+              ))}
             </select>
-          </div>
-          <h3 className="admin-form-title">Subcategory</h3>
-          <input
-            className="field-input"
-            type="text"
-            placeholder="Subcategory"
-            name="subcategory"
-            onChange={(e) =>
-              (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
-            }
-          />
-          <h3 className="admin-form-title">Height</h3>
-          <input
-            className="field-input"
-            type="text"
-            placeholder="Height"
-            name="height"
-            onChange={(e) =>
-              (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
-            }
-          />
-          <h3 className="admin-form-title">Width</h3>
-          <input
-            className="field-input"
-            type="text"
-            placeholder="width"
-            name="width"
-            onChange={(e) =>
-              (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
-            }
-          />
-          <h3 className="admin-form-title">Publisher</h3>
-          <select className="select-filter" defaultValue="" name="publisher">
-            <option></option>
-            {this.state.publisher.map((item) => (
-              <option>{item.name}</option>
-            ))}
-          </select>
-          <div className="form-error"> {this.state.error} </div>
-          <input className="submit-input" type="submit" />
-        </form>
+            <div className="form-error"> {this.state.errormain} </div>
+            <div className="form-okay"> {this.state.okaymain} </div>
+            <input className="submit-input" type="submit" />
+          </form>
+        </div>
       );
     } else {
       window.location.href = "/notAccess";
@@ -227,7 +303,7 @@ export class AdminComics extends React.Component {
   }
 
   componentDidMount() {
-    fetch("api/comics", {
+    fetch(`${StaticValue.BaseURL}/api/comics`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -265,7 +341,7 @@ export class AdminComics extends React.Component {
           });
         }
       );
-    fetch("api/publisher", {
+    fetch(`${StaticValue.BaseURL}/api/publisher`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -311,8 +387,16 @@ export class AdminComics extends React.Component {
         return (
           <div className="catalog-container">
             <div className="filter-container">
+              <input
+                type="text"
+                className="filter-input"
+                placeholder="Поиск"
+                onChange={(e) => {
+                  this.setState({ filterValue: e.target.value });
+                }}
+              />
               <div className="select-container">
-                <h2>Переплет</h2>
+                <h3> Переплет </h3>
                 <select
                   className="select-filter"
                   onChange={(e) =>
@@ -326,33 +410,24 @@ export class AdminComics extends React.Component {
                     })
                   }
                 >
-                  <option></option>
-                  <option>Мягкий переплет</option>
-                  <option>Твердый переплет</option>
+                  <option> </option> <option> Мягкий переплет </option>
+                  <option> Твердый переплет </option>
                 </select>
               </div>
               <div className="select-container">
-                <h2>Издательство</h2>
+                <h3> Издательство </h3>
                 <select
                   className="select-filter"
                   onChange={(e) =>
                     this.setState({ publishValue: e.target.value })
                   }
                 >
-                  <option></option>
+                  <option> </option>
                   {this.state.publisher.map((item) => (
-                    <option>{item.name}</option>
+                    <option> {item.name} </option>
                   ))}
                 </select>
               </div>
-              <input
-                type="text"
-                className="filter-input"
-                placeholder="Поиск"
-                onChange={(e) => {
-                  this.setState({ filterValue: e.target.value });
-                }}
-              />
             </div>
             <AdminComicsCard
               items={this.state.items}
@@ -393,16 +468,27 @@ export class AdminComicsCard extends React.Component {
                 : comic.hardCover === this.props.hardCoverValue
             )
             .map((item) => (
-              <div className="product-item">
-                <Link to={`/adminComicsUpdate/${item.id}`}>
-                  <div className="comics-img">
-                    <img src={item.photo} alt="description of image" />
-                  </div>
-                  <div className="product-title">
-                    <span className="product-title-text"> {item.name} </span>
-                  </div>
-                </Link>
-              </div>
+              <Link
+                to={`/adminComicsUpdate/${item.id}`}
+                className="product-item"
+              >
+                <div className="comics-img">
+                {item.photo.includes("http") ? (
+                  <img
+                    src={item.photo}
+                    alt="description of image"
+                  />
+                ) : (
+                  <img
+                    src={StaticValue.BaseURL + item.photo}
+                    alt="description of image"
+                  />
+                )}
+                </div>
+                <div className="product-title">
+                  <span className="product-title-text"> {item.name} </span>
+                </div>
+              </Link>
             ))}
         </div>
       );
@@ -425,9 +511,11 @@ export class AdminUpdateComics extends React.Component {
       comics: [],
       isLoadedComics: false,
       isLoadedPublish: false,
+      loadedFile: "",
     };
     this.clickUpdate = this.clickUpdate.bind(this);
     this.clickDelete = this.clickDelete.bind(this);
+    this.clickAddPhoto = this.clickAddPhoto.bind(this);
   }
 
   componentDidMount() {
@@ -460,6 +548,7 @@ export class AdminUpdateComics extends React.Component {
           this.setState({
             isLoadedComics: true,
             comics: result,
+            loadedFile: result.photo,
           });
         },
         (error) => {
@@ -507,6 +596,56 @@ export class AdminUpdateComics extends React.Component {
       );
   }
 
+  clickAddPhoto(e) {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("uploadedFile", this.state.selectedFile);
+    fetch(`${StaticValue.BaseURL}/api/addPhoto`, {
+      method: "Post",
+      headers: {
+        Authorization: "Bearer " + localStorage.token,
+      },
+      body: data,
+    })
+      .then((res) => {
+        this.setState({
+          status: res.status,
+        });
+        return res.json();
+      })
+      .then(
+        (result) => {
+          if (this.state.status === 200) {
+            this.setState({
+              okay: result.message,
+              loadedFile: result.message,
+            });
+            alert("Ok");
+          } else if (this.state.status === 400) {
+            this.setState({ error: result.message });
+          }
+          if (this.state.status === 401) {
+            window.location.href = "/notAuthorize";
+          }
+          if (this.state.status === 403) {
+            window.location.href = "/notAccess";
+          }
+          if (this.state.status === 404) {
+            window.location.href = "/notFound";
+          }
+          if (this.state.status === 500) {
+            window.location.href = "/internalServerError";
+          }
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
   clickUpdate(e) {
     e.preventDefault();
     var data = new FormData(e.target);
@@ -516,7 +655,7 @@ export class AdminUpdateComics extends React.Component {
         publishId = publish.id;
       }
     });
-    fetch(`${StaticValue.BaseURL}api/comics`, {
+    fetch(`${StaticValue.BaseURL}/api/comics`, {
       method: "Put",
       headers: {
         "Content-Type": "application/json",
@@ -525,7 +664,9 @@ export class AdminUpdateComics extends React.Component {
       body: JSON.stringify({
         id: parseInt(data.get("id")),
         name: data.get("name"),
-        photo: "/Photos/" + data.get("photo"),
+        photo: data.get("photo").includes("http")
+          ? data.get("photo")
+          : "/Photos/" + data.get("photo"),
         description: data.get("description"),
         pages: parseInt(data.get("pages")),
         hardCover:
@@ -546,9 +687,10 @@ export class AdminUpdateComics extends React.Component {
       .then(
         (result) => {
           if (this.state.status === 200) {
+            this.setState({ okaymain: "Отправлено", errormain: "" });
             alert("Ok");
           } else if (this.state.status === 400) {
-            this.setState({ error: result.message });
+            this.setState({ errormain: result.message });
           }
           if (this.state.status === 401) {
             window.location.href = "/notAuthorize";
@@ -574,7 +716,7 @@ export class AdminUpdateComics extends React.Component {
   clickDelete(e) {
     e.preventDefault();
     try {
-      fetch(`${StaticValue.BaseURL}api/comics/${this.props.id}`, {
+      fetch(`${StaticValue.BaseURL}/api/comics/${this.props.id}`, {
         method: "Delete",
         headers: {
           "Content-Type": "application/json",
@@ -592,10 +734,11 @@ export class AdminUpdateComics extends React.Component {
         .then(
           (result) => {
             if (this.state.status === 200) {
+              this.setState({ okaymain: "Отправлено", errormain: "" });
               alert("Ok");
               window.location.href = "/adminComics";
             } else if (this.state.status === 400) {
-              this.setState({ error: result.message });
+              this.setState({ errormain: result.message });
             }
             if (this.state.status === 401) {
               window.location.href = "/notAuthorize";
@@ -626,8 +769,25 @@ export class AdminUpdateComics extends React.Component {
       if (localStorage.idRole == 1) {
         return (
           <div>
+            <form
+              className="form-container add-container"
+              onSubmit={this.clickAddPhoto}
+            >
+              <div class="file-input">
+                <input
+                  type="file"
+                  accept=".jpg, .jpeg, .png"
+                  onChange={(e) =>
+                    this.setState({ selectedFile: e.target.files[0] })
+                  }
+                />
+              </div>
+              <div className="form-error"> {this.state.error} </div>
+              <div className="form-okay"> {this.state.okay} </div>
+              <input className="submit-input" type="submit" />
+            </form>
             <form className="form-container" onSubmit={this.clickUpdate}>
-              <h3 className="admin-form-title">Id</h3>
+              <h3 className="admin-form-title"> Идетификатор </h3>
               <input
                 className="field-input"
                 type="text"
@@ -635,39 +795,39 @@ export class AdminUpdateComics extends React.Component {
                 name="id"
                 readOnly
               />
-              <h3 className="admin-form-title">Name</h3>
+              <h3 className="admin-form-title"> Название </h3>
               <input
                 className="field-input"
                 type="text"
-                placeholder="Name"
+                placeholder="Название"
                 defaultValue={this.state.comics.name}
                 name="name"
               />
-              <h3 className="admin-form-title">Photo</h3>
+              <h3 className="admin-form-title"> Фото </h3>
               <input
                 className="field-input"
                 type="text"
-                placeholder="Photo"
-                defaultValue={
-                  this.state.comics.photo.split("/")[1] != ""
-                    ? this.state.comics.photo.split("/")[2]
-                    : this.state.comics.photo
+                placeholder="Фото"
+                value={
+                  this.state.loadedFile.indexOf("/Photos/") == 0
+                    ? this.state.loadedFile.substring("/Photos/".length)
+                    : this.state.loadedFile
                 }
                 name="photo"
               />
-              <h3 className="admin-form-title">Description</h3>
+              <h3 className="admin-form-title"> Описание </h3>
               <textarea
                 className="field-input input-comment"
                 type="text"
-                placeholder="Description"
+                placeholder="Описание"
                 defaultValue={this.state.comics.description}
                 name="description"
               />
-              <h3 className="admin-form-title">Pages</h3>
+              <h3 className="admin-form-title"> Количество страниц </h3>
               <input
                 className="field-input"
                 type="text"
-                placeholder="Pages"
+                placeholder="Количество страниц"
                 defaultValue={this.state.comics.pages}
                 name="pages"
                 onChange={(e) =>
@@ -675,59 +835,62 @@ export class AdminUpdateComics extends React.Component {
                 }
               />
               <div className="select-container">
-                <h3 className="admin-form-title">Hard Cover</h3>
+                <h3 className="admin-form-title"> Твердый переплет </h3>
                 <select
                   className="select-mark"
                   name="hardCover"
                   defaultValue={this.state.comics.hardCover}
                 >
-                  <option>true</option>
-                  <option>false</option>
+                  <option> true </option> <option> false </option>
                 </select>
               </div>
-              <h3 className="admin-form-title">Subcategory</h3>
+              <h3 hidden className="admin-form-title">
+                Подкатегория
+              </h3>
               <input
+                hidden
                 className="field-input"
                 type="text"
-                placeholder="Subcategory"
+                placeholder="Подкатегория"
                 name="subcategory"
                 defaultValue={this.state.comics.subcategory}
                 readOnly
               />
-              <h3 className="admin-form-title">Hright</h3>
+              <h3 className="admin-form-title"> Длина </h3>
               <input
                 className="field-input"
                 type="text"
-                placeholder="Height"
+                placeholder="Длина"
                 name="height"
                 defaultValue={this.state.comics.format.height}
                 onChange={(e) =>
                   (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
                 }
               />
-              <h3 className="admin-form-title">Width</h3>
+              <h3 className="admin-form-title"> Ширина </h3>
               <input
                 className="field-input"
                 type="text"
-                placeholder="width"
+                placeholder="Ширина"
                 name="width"
                 defaultValue={this.state.comics.format.width}
                 onChange={(e) =>
                   (e.target.value = e.target.value.replace(/[^+\d]/g, ""))
                 }
               />
-              <h3 className="admin-form-title">Publisher</h3>
+              <h3 className="admin-form-title"> Издатель </h3>
               <select
                 className="select-filter"
                 defaultValue={this.state.comics.publisher}
                 name="publisher"
               >
                 {this.state.publisher.map((item) => (
-                  <option>{item.name}</option>
+                  <option> {item.name} </option>
                 ))}
               </select>
-              <div className="form-error"> {this.state.error} </div>
               <input className="submit-input" type="submit" />
+              <div className="form-error"> {this.state.errormain} </div>
+              <div className="form-okay"> {this.state.okaymain} </div>
             </form>
             <form className="form-container" onSubmit={this.clickDelete}>
               <input className="submit-input" type="submit" value="Удалить" />

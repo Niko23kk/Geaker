@@ -29,7 +29,7 @@ export class AdminParser extends React.Component {
         data.get("start") <= data.get("end")
       ) {
         fetch(
-          `${StaticValue.BaseURL}api/parse/${data.get("start")}/${data.get(
+          `${StaticValue.BaseURL}/api/parse/${data.get("start")}/${data.get(
             "end"
           )}`,
           {
@@ -82,7 +82,7 @@ export class AdminParser extends React.Component {
     e.preventDefault();
     try {
       var data = new FormData(e.target);
-      fetch(`${StaticValue.BaseURL}api/parsersave/${data.get("file")}`, {
+      fetch(`${StaticValue.BaseURL}/api/parsersave/${data.get("file")}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.token,
@@ -138,34 +138,32 @@ export class AdminParser extends React.Component {
             className="form-container add-container add-photo-container"
             onSubmit={this.clickParse}
           >
-            <h3 className="admin-form-title">Start page</h3>
+            <h3 className="admin-form-title"> Первая страница </h3>
             <input
               className="field-input"
               type="text"
-              placeholder="Start page"
+              placeholder="Начальная страница"
               name="start"
             />
-            <h3 className="admin-form-title">End page</h3>
+            <h3 className="admin-form-title"> Последняя страница </h3>
             <input
               className="field-input"
               type="text"
-              placeholder="End page"
+              placeholder="Конечная страница"
               name="end"
             />
             <div className="form-error"> {this.state.error} </div>
             <div className="form-okay"> {this.state.okay} </div>
             <input className="submit-input" type="submit" />
           </form>
-
           <form
             className="form-container add-container add-photo-container"
             onSubmit={this.clickSave}
           >
-            <h3 className="admin-form-title">File name</h3>
+            <h3 className="admin-form-title"> Имя файла </h3>
             <select className="select-filter" name="file">
-              <option>result</option>
-              <option>format</option>
-              <option>comicsphoto</option>
+              <option> result </option> <option> format </option>
+              <option> comicsphoto </option>
             </select>
             <input className="submit-input" type="submit" value="Сохранить" />
           </form>

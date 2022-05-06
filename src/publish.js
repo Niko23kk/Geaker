@@ -1,8 +1,9 @@
 import React from "react";
+import { StaticValue } from "./staticValue";
 
 export class Publish extends React.Component {
   componentDidMount() {
-    fetch("/publisher", {
+    fetch(`${StaticValue.BaseURL}/publisher`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +32,7 @@ export class Publish extends React.Component {
         <table>
           {this.state.items.map((item) => (
             <tr>
-              <td>{item.name}</td>
+              <td> {item.name} </td>
             </tr>
           ))}
         </table>

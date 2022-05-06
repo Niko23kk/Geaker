@@ -3,11 +3,15 @@ import ReactDOM from "react-dom";
 
 import { ComicsCard } from "./comicsCard";
 import "../css/catalog.css";
+import { AddCoinCounter } from "../reducer/coinsReducer";
+import { canCoinUpdate, updateCoin } from "..";
+import { StaticValue } from "../staticValue";
 
 export class Comics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoaded: false,
       items: [],
       publisher: [],
       filterValue: "",
@@ -17,7 +21,7 @@ export class Comics extends React.Component {
   }
 
   componentDidMount() {
-    fetch("api/comics", {
+    fetch(`${StaticValue.BaseURL}/api/comics`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +59,7 @@ export class Comics extends React.Component {
           });
         }
       );
-    fetch("api/publisher", {
+    fetch(`${StaticValue.BaseURL}/api/publisher`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -96,12 +100,25 @@ export class Comics extends React.Component {
   }
 
   render() {
-    if (this.state !== null) {
+    if (this.state !== null && this.state.isLoaded) {
       return (
         <div className="catalog-container">
+          {canCoinUpdate ? (
+            <AddCoinCounter value={4}> </AddCoinCounter>
+          ) : (
+            <> </>
+          )}
           <div className="filter-container">
+            <input
+              type="text"
+              className="filter-input"
+              placeholder="Поиск"
+              onChange={(e) => {
+                this.setState({ filterValue: e.target.value });
+              }}
+            />
             <div className="select-container">
-              <h2>Переплет</h2>
+              <h3> Переплет </h3>
               <select
                 className="select-filter"
                 onChange={(e) =>
@@ -115,33 +132,24 @@ export class Comics extends React.Component {
                   })
                 }
               >
-                <option></option>
-                <option>Мягкий переплет</option>
-                <option>Твердый переплет</option>
+                <option> </option> <option> Мягкий переплет </option>
+                <option> Твердый переплет </option>
               </select>
             </div>
             <div className="select-container">
-              <h2>Издательство</h2>
+              <h3> Издательство </h3>
               <select
                 className="select-filter"
                 onChange={(e) =>
                   this.setState({ publishValue: e.target.value })
                 }
               >
-                <option></option>
+                <option> </option>
                 {this.state.publisher.map((item) => (
-                  <option>{item.name}</option>
+                  <option> {item.name} </option>
                 ))}
               </select>
             </div>
-            <input
-              type="text"
-              className="filter-input"
-              placeholder="Поиск"
-              onChange={(e) => {
-                this.setState({ filterValue: e.target.value });
-              }}
-            />
           </div>
           <ComicsCard
             items={this.state.items}
