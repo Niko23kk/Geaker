@@ -67,9 +67,8 @@
     align-items: center;
     text-align: center;
     padding: 4rem;
-    border: 2rem solid;
+    border: 1rem solid var(--text-main-color);
     border-image-slice: 1;
-    border-image-source: repeating-conic-gradient( hsl(0, 100%, 50%), hsl(36, 100%, 50%), hsl(108, 100%, 50%), hsl(211, 100%, 50%), hsl(247, 100%, 50%), hsl(277, 100%, 50%), hsl(320, 100%, 50%), hsl(0, 100%, 50%));
 }
 
 .painter-body header.hidden {
@@ -86,22 +85,6 @@
     transition: opacity 0.3s ease;
 }
 
-.painter-body header a:nth-of-type(1) {
-    color: hsl(36, 100%, 40%);
-}
-
-.painter-body header a:nth-of-type(2) {
-    color: hsl(108, 100%, 25%);
-}
-
-.painter-body header a:nth-of-type(3) {
-    color: hsl(211, 100%, 40%);
-}
-
-.painter-body header a:nth-of-type(4) {
-    color: hsl(277, 100%, 40%);
-}
-
 .painter-body header a:hover,
 .painter-body header a:active {
     opacity: 1;
@@ -112,12 +95,13 @@
     font-size: 8rem;
     letter-spacing: -0.3rem;
     margin: 0 0 3rem;
-    background: linear-gradient( 90deg, hsl(0, 100%, 50%), hsl(211, 100%, 50%) 50%, hsl(108, 100%, 40%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .painter-body .blob-btn {
+    font-family: 'Comic Sans', cursive;
+    font-weight: 600;
     z-index: 1;
     position: relative;
     padding: 1.5rem 4rem;
@@ -129,12 +113,10 @@
     border: none;
     cursor: pointer;
     border-radius: 3rem;
-    animation: colorShift 13s ease infinite forwards;
     box-shadow: 0 0px 15px currentColor;
     margin-bottom: 3rem;
     display: inline-flex;
     text-decoration: none;
-    font-weight: 400;
 }
 
 .painter-body .blob-text {
@@ -259,54 +241,6 @@
     border-radius: 100%;
 }
 
-@keyframes colorShift {
-    0% {
-        color: hsl(0, 100%, 40%);
-    }
-    10% {
-        color: hsl(36, 100%, 40%);
-    }
-    20% {
-        color: hsl(72, 100%, 30%);
-    }
-    30% {
-        color: hsl(108, 100%, 30%);
-    }
-    40% {
-        color: hsl(144, 100%, 30%);
-    }
-    50% {
-        color: hsl(180, 100%, 20%);
-    }
-    60% {
-        color: hsl(211, 100%, 40%);
-    }
-    70% {
-        color: hsl(247, 100%, 40%);
-    }
-    80% {
-        color: hsl(277, 100%, 50%);
-    }
-    90% {
-        color: hsl(301, 100%, 40%);
-    }
-    100% {
-        color: hsl(320, 100%, 30%);
-    }
-    100% {
-        color: hsl(350, 100%, 40%);
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
 .painter-body .btn {
     display: inline-flex;
     cursor: pointer;
@@ -408,4 +342,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
