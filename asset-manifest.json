@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/geaker/static/css/main.cfc8102b.chunk.css",
+    "main.js": "/geaker/static/js/main.dabe142b.chunk.js",
+    "main.js.map": "/geaker/static/js/main.dabe142b.chunk.js.map",
+    "runtime-main.js": "/geaker/static/js/runtime-main.3477c6b7.js",
+    "runtime-main.js.map": "/geaker/static/js/runtime-main.3477c6b7.js.map",
+    "static/js/2.9308e9fa.chunk.js": "/geaker/static/js/2.9308e9fa.chunk.js",
+    "static/js/2.9308e9fa.chunk.js.map": "/geaker/static/js/2.9308e9fa.chunk.js.map",
+    "static/js/3.4aac8121.chunk.js": "/geaker/static/js/3.4aac8121.chunk.js",
+    "static/js/3.4aac8121.chunk.js.map": "/geaker/static/js/3.4aac8121.chunk.js.map",
+    "index.html": "/geaker/index.html",
+    "static/css/main.cfc8102b.chunk.css.map": "/geaker/static/css/main.cfc8102b.chunk.css.map",
+    "static/js/2.9308e9fa.chunk.js.LICENSE.txt": "/geaker/static/js/2.9308e9fa.chunk.js.LICENSE.txt",
+    "static/media/comics1_com.2091c8db.png": "/geaker/static/media/comics1_com.2091c8db.png",
+    "static/media/comics2_project.687e012b.png": "/geaker/static/media/comics2_project.687e012b.png",
+    "static/media/comics3_game.2f7d002d.png": "/geaker/static/media/comics3_game.2f7d002d.png",
+    "static/media/comics4_news.2fbbb12b.png": "/geaker/static/media/comics4_news.2fbbb12b.png",
+    "static/media/comics5_place.6a5a678e.png": "/geaker/static/media/comics5_place.6a5a678e.png",
+    "static/media/comics6_fav.c02d9a5b.png": "/geaker/static/media/comics6_fav.c02d9a5b.png",
+    "static/media/comics7_forum.48de8267.png": "/geaker/static/media/comics7_forum.48de8267.png",
+    "static/media/comics8_char.dae99c0a.png": "/geaker/static/media/comics8_char.dae99c0a.png",
+    "static/media/comics9_yourchar.60135de5.png": "/geaker/static/media/comics9_yourchar.60135de5.png",
+    "static/media/delete.524f950a.png": "/geaker/static/media/delete.524f950a.png",
+    "static/media/jake.00212c3b.gif": "/geaker/static/media/jake.00212c3b.gif",
+    "static/media/logo.bb44e913.png": "/geaker/static/media/logo.bb44e913.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3477c6b7.js",
+    "static/js/2.9308e9fa.chunk.js",
+    "static/css/main.cfc8102b.chunk.css",
+    "static/js/main.dabe142b.chunk.js"
+  ]
+}
