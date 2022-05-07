@@ -55,7 +55,7 @@ export const Painter = () => {
       data.append("uploadedFile", file);
       data.append("project", params.id);
 
-      fetch(`${StaticValue.BaseURL}/api/addAnimationImage/${params.id}`, {
+      fetch(`${StaticValue.BaseURL}api/addAnimationImage/${params.id}`, {
         method: "Post",
         headers: {
           Authorization: "Bearer " + localStorage.token,
