@@ -2,19 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { Header } from "./header";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./reducer/coinsReducer";
 import { StaticValue } from "./staticValue";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <Provider store={store}>
       <Header />
       <App />
     </Provider>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById("root")
 );
 

@@ -26,7 +26,14 @@ export class PlayerCharacterCard extends React.Component {
           .map((item) => (
             <div className="product-item">
               <div className="character-img">
-                <img src={item.photo} alt="description of image" />
+                {item.photo.includes("http") ? (
+                  <img src={item.photo} alt="description of image" />
+                ) : (
+                  <img
+                    src={StaticValue.BaseURL + item.photo}
+                    alt="description of image"
+                  />
+                )}
               </div>{" "}
               <div className="product-title">
                 <span className="product-title-text"> {item.name} </span>{" "}

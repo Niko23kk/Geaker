@@ -27,6 +27,7 @@ export class CharacterCard extends React.Component {
     })
       .then((res) => {
         if (res.status === 200) {
+          alert("Куплено");
           return res.json();
         }
         if (res.status === 401) {
